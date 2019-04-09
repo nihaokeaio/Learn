@@ -1,0 +1,114 @@
+自定义标签：
+颜色：bg=>背景色，fg=>前景色['bule','red'......'#ff0000'=>代表-红：0xff；绿：0x00；蓝：0x00]
+字体：（字体系列，大小，类型）
+    类型：normal;bold(粗体);romam(罗马);...
+    大小：数字
+    系列：times，courier，windows自带的字体
+边框与浮凸：
+    bd=N:设置边框宽度
+    relief=S：设置边框类型，FLAT=扁平；SUNKEN=凹陷；RAISED=凸起；GROOVE=凹槽；SOLID=加粗；RIDGE=脊状
+光标：
+    cursor=‘gumby’，鼠标变形为绿色
+    watch，手表,圆圈
+    pencil，铅笔
+    cross,十字
+    hand，手型
+边距：
+    padx=
+    pady=.....组建与整个图像的边距，也可以叫留白
+
+askquestion:返回YES & NO
+askyesno;askokcancel:返回True & False
+askfloat:返回浮点型
+askinteger:返回整数
+askstring:返回字符串
+askopenfilename:返回文件的完整目录
+askdirectory:返回目录
+askcolor:返回颜色数据
+
+win.focus_set()#使窗口接管应用程序的输入焦点
+win.grab_set()#禁用应用程序的其他窗口
+win.wait_window()#暂停调用直到win组建被销毁，但是主循环为激活状态，销毁后自动释放grap
+#模态常用三步骤
+win.destroy并不能终止win.mainloop()的进程，win.quit才可以
+减少递归的mainloop()(嵌套的mainloop),而是用win.wait_window
+protocal方法拦截win.protocol('WM_DELETE_WINDOW',win.quit())，此处为退出，也可以lambda:None,表示点右上角的x什么也不做
+
+bind事件：
+'<%s>'%
+KeyPress:捕捉键盘上任意单键的按下
+B1-Motion:按键左键按下并拖动时被调用，接受鼠标当前坐标x，y，以实现对象移动，拖动，像素级绘画
+Button-3;Button-2:=>鼠标右键和中间
+Return;Up=>具体按键
+常用具体按键：https://www.goingthewongway.com/tkinter-keyboard-bindings-in-python/
+
+
+Message组件常用来生成警告等图标
+Entry:输入文本框，ent=Entry(self),ent.get()得到文本框的内容，ent.config(show='*')常用来设置密码，state='disabled'灰色不可编辑
+
+Scale组件：
+label提供一个与标尺一同出现的文本；lerget指定以像素为单位的初始大小；orient指定一个轴['horizontal','vertical']
+from_&to设置标尺的值大小
+tickinterval设置一般间距标记间单位的长度（设标尺值为[0:4],则若设1那么由5个单位[0,1,2,3,4]，设2就是3个单位[0,2,4]）
+resolution设置单位数量，鼠标点击一次或者拖动一次标尺的跳跃值，默认为1
+showvalue可以显示或隐藏滑块旁边的当前值
+
+PhotoImage 支持:GIF,PPM,PGM
+BitmapImage:.xbm
+
+Menu:
+add_separator:添加分割线
+tearoff:用来设置菜单中出现的虚线，True False，可以用来打开新的窗口
+underline:按下Alt键后，你选择的underline值即为打开按钮的关键词
+
+列表框：
+index=self.listbox.curselection()
+label=self.listbox.get(index)
+获取列表选中值
+selectmode:SINGLE选中单项，BROWSE选中单项，允许拖拉，MULTIPLE:单击会触发状态但不影响选中条目，EXTENDED:允许多选
+
+text:
+索引：END+'-1c'
+    上式='end-1c',文本最后会默认添加\n，于是去掉了\n符
+    +1c前一个字符，+2l前面一行
+    行末与词首（Lineend,wordstart）
+    self.text.delete('1.0',END)#1.0表示第一行第零列(,]
+    self.text.insert('1.0',text)
+    self.text.mark_set(INSERT,'1.0')=>INSERT表示光标后的那个位置
+标志：self.text.mark_set(INSERT,'1.0')
+    将插入光标设置在文本的开头
+    self.text.mark_set('linetwo',2.0)
+    创建自己的标志，INSERT是内置的标志
+    unset可以删除标志
+标签：text=self.text.get(SEL_FIRST,SEL_LAST)
+     ...没看懂。。。
+
+画布：Canvas
+id=canvas.creat_line(fromx,fromy,tox,toy)
+    类似：oval(圆形),arc(弧形),rectangle(矩形)都需要四个坐标
+id=canvas.creat_image(fromx,fromy,...)只需左上角坐标
+    类似：window,text...
+此处id即为对象标识符
+    move，delete,tkraise(将对象移动多前端),lower(降低对象层次)，itemconfig
+    (fill='')对象填充
+    canvas.move(id,changex,changey)#注意，此处为偏置值
+标签：
+1:canvas.creat_line(x1,y1,x2,y2,fill='red',tag='bubbles')
+2:id=canvas.creat_line(x1,y1,x2,y2,fill='red')
+    canvas.addtag_withtag('bubbles',id)
+
+canvas.move('bubbles',changex,changey),此处可以通过标签实现整体移动
+内置标签：all:所有对象；current:鼠标光标指向
+
+canv.bind('<Double-1>',onCanvasclick)#bind to whole canvas
+canv.tag_bind(id1,'<Double-1>',onobjclick))
+canv.tag_bind(id2,'<Double-1>',onobjclick))#bind obj
+
+grid
+Label(...).grid(row=r,column=y)将其分配到第r行第y列
+grid无法与pack公用于同一个容器
+放大缩小见grid3.py
+
+
+时间线程动画
+
