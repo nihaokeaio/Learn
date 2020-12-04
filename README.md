@@ -1,2 +1,2 @@
 # Learn
-code of python
+code of programing
